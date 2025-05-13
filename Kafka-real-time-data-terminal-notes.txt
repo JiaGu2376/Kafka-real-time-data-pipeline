@@ -1,0 +1,42 @@
+# Download packages from Kafka: 
+-------------------------
+wget https://archive.apache.org/dist/kafka/3.3.1/kafka_2.12-3.3.1.tgz 
+tar -xvf kafka_2.12-3.3.1.tgz
+
+
+# Download java 
+-------------------------
+sudo yum install java-21-amazon-corretto
+java -version
+
+
+# Go to kafka file: Starting zookeeper in Kafka the first thing as it is the manager to assign everything:
+-------------------------
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+
+# Oepning a new terminal to run Kafka, one terminal running the zookeeper, one running the Kafka. 
+Connecting to Kafka Server: cannot access private DNS from local computer at less in the same network, hence need to change the private IP to the public IP. 
+That way the EC2 machine can get accessed outside of my network. 
+Then need to provide the security access from the local machine. 
+Change the inbound rules to allow all traffic from any IPv4.
+[not a good practice, usually handled by cloud engineering for security access]
+Create Topic: 
+-------------------------
+bin/kafka-topics.sh --create --topic demo_test --bootstrap-server 3.27.221.42:9092 --replication-factor 1 --partitions 1
+
+
+# Start Producer:
+--------------------------
+bin/kafka-console-producer.sh --topic demo_test --bootstrap-server 3.27.221.42:9092 
+
+
+# Start Consumer:
+-------------------------
+cd kafka_2.12-3.3.1
+bin/kafka-console-consumer.sh --topic demo_test --bootstrap-server 3.27.221.42:9092
+
+
+# when values are inserted in the producer window, they will then reflect on the consumer window
+
+
